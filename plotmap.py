@@ -14,7 +14,7 @@ OPEN = '#1bd'
 COLORS = [BLANK, WALL, START, TARGET, PATH, CLOSED, OPEN]
 
 class PlotMap:
-    def __init__(self, map: Map): # remember to type all other args
+    def __init__(self, map: Map):
         self.map = map
     
     def plot(self):
