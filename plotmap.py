@@ -1,4 +1,4 @@
-from node import Node
+from node import Node, NodeState
 from map import Map
 from matplotlib import pyplot as plt
 from matplotlib import colors
@@ -29,13 +29,13 @@ class PlotMap:
         return matrix
     
     def append_open_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().open, 6)
+        self.replace_matrix(matrix, self.map.get_path().open, NodeState.OPEN)
     
     def append_closed_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().closed, 5)
+        self.replace_matrix(matrix, self.map.get_path().closed, NodeState.CLOSED)
     
     def append_path_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path_list(), 4)
+        self.replace_matrix(matrix, self.map.get_path_list(), NodeState.PATH)
     
     def replace_matrix(self, matrix, list, val):
         for node in list:

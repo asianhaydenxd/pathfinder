@@ -1,3 +1,12 @@
+class NodeState:
+    BLANK = 0
+    WALL = 1
+    START = 2
+    TARGET = 3
+    PATH = 4
+    CLOSED = 5
+    OPEN = 6
+
 class Node:
     def __init__(self, row, col, parent):
         self.row = row
@@ -55,7 +64,7 @@ class Node:
         return self.row + 1 > map.height or self.col + 1 > map.width
     
     def is_wall(self, map):
-        return map.matrix[self.row][self.col] == 1
+        return map.matrix[self.row][self.col] == NodeState.WALL
     
     def is_in_list(self, list):
         for node in list:

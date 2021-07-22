@@ -1,11 +1,11 @@
-from node import Node
+from node import Node, NodeState
 from path import Path
 
 class Map:
     def __init__(self, matrix):
         self.matrix = matrix
-        self.start = self.get_node_with_value(2)
-        self.target = self.get_node_with_value(3)
+        self.start = self.get_node_with_value(NodeState.START)
+        self.target = self.get_node_with_value(NodeState.TARGET)
         self.height = len(self.matrix)
         self.width = len(self.matrix[0])
     
