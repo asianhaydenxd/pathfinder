@@ -1,4 +1,5 @@
 from node import Node
+from path import Path
 
 class Map:
     def __init__(self, map):
@@ -29,7 +30,7 @@ class Map:
         
         return best_node
     
-    def get_end_of_path(self):
+    def get_path(self):
         open = []
         closed = []
         open.append(self.start)
@@ -37,7 +38,7 @@ class Map:
         while True:
             next_node = self.get_next_node(open, closed)
             if next_node != None:
-                return next_node
+                return Path(next_node, open, closed)
     
     def get_next_node(self, open, closed):
         current = self.get_best_node(open)
@@ -54,10 +55,6 @@ class Map:
 
             if not neighbor in open:
                 open.append(neighbor)
-        
-        print(f'{current.get_total_distance(self.start, self.target)} {current.get_coords()} {current.parent} {[node.get_coords() for node in open]}')
     
-    def get_path(self):
-        return self.get_end_of_path().get_path_as_list()
-    
-    
+    def get_path_list(self):
+        return self.get_path().get_list()

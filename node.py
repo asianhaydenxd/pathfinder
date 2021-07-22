@@ -62,14 +62,6 @@ class Node:
     
     def is_equal_to(self, node):
         return node.row == self.row and node.col == self.col
-
-    def get_path_as_list(self):
-        node = self
-        path_list = [(node.row, node.col)]
-
-        while node.parent != None:
-            node = node.parent
-            path_list.append((node.row, node.col))
-
-        path_list.reverse()
-        return path_list
+    
+    def list_coords(node_list):
+        return [node.get_coords() for node in node_list]
