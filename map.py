@@ -49,8 +49,11 @@ class Map:
 
         if current.is_equal_to(self.target):
             return current
-        
-        for neighbor in current.get_neighbors():
+
+        self.iterate_through_neighbors(current, open, closed)
+    
+    def iterate_through_neighbors(self, node, open, closed):
+        for neighbor in node.get_neighbors():
             if neighbor.is_blocked(self) or neighbor.is_in_list(closed):
                 continue
 
