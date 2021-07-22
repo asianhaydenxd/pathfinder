@@ -52,7 +52,7 @@ class Node:
         return self.row + 1 > map.height or self.col + 1 > map.width
     
     def is_wall(self, map):
-        return map.map[self.row][self.col] == 1
+        return map.matrix[self.row][self.col] == 1
     
     def is_in_list(self, list):
         for node in list:

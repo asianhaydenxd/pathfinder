@@ -2,18 +2,18 @@ from node import Node
 from path import Path
 
 class Map:
-    def __init__(self, map):
-        self.map = map
+    def __init__(self, matrix):
+        self.matrix = matrix
         self.start = self.get_node_with_value(2)
         self.target = self.get_node_with_value(3)
-        self.height = len(self.map)
-        self.width = len(self.map[0])
+        self.height = len(self.matrix)
+        self.width = len(self.matrix[0])
     
     def __str__(self):
-        return str(self.map)
+        return str(self.matrix)
 
     def get_node_with_value(self, target):
-        for index, row in enumerate(self.map):
+        for index, row in enumerate(self.matrix):
             if target in row:
                 return Node(index, row.index(target), None)
         raise ValueError('No value exists in map')
@@ -46,7 +46,6 @@ class Map:
         closed.append(current)
 
         if current.is_equal_to(self.target):
-            print(f'{len(open)+len(closed)} checks')
             return current
         
         for neighbor in current.get_neighbors():
