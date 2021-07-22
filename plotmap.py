@@ -22,14 +22,20 @@ class PlotMap:
         PlotMap.show_plot_window(path_matrix)
     
     def append_path(self):
-        mutable_matrix = self.map.matrix
-        self.append_nodes(mutable_matrix, self.map.get_path().open, 6)
-        self.append_nodes(mutable_matrix, self.map.get_path().closed, 5)
-        self.append_nodes(mutable_matrix, self.map.get_path_list(), 4)
-        return mutable_matrix
+        matrix = self.map.matrix
+        self.append_open_nodes(matrix)
+        self.append_closed_nodes(matrix)
+        self.append_path_nodes(matrix)
+        return matrix
     
-    def append_nodes(self, matrix, nodes, val):
-        self.replace_matrix(matrix, nodes, val)
+    def append_open_nodes(self, matrix):
+        self.replace_matrix(matrix, self.map.get_path().open, 6)
+    
+    def append_closed_nodes(self, matrix):
+        self.replace_matrix(matrix, self.map.get_path().closed, 5)
+    
+    def append_path_nodes(self, matrix):
+        self.replace_matrix(matrix, self.map.get_path_list(), 4)
     
     def replace_matrix(self, matrix, list, val):
         for node in list:
