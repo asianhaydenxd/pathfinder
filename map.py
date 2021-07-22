@@ -35,22 +35,27 @@ class Map:
         open.append(self.start)
 
         while True:
-            current = self.get_best_node(open)
-            open.remove(current)
-            closed.append(current)
+            next_node = self.get_next_node(open, closed)
+            if next_node != None:
+                return next_node
+    
+    def get_next_node(self, open, closed):
+        current = self.get_best_node(open)
+        open.remove(current)
+        closed.append(current)
 
-            if current.row == self.target.row and current.col == self.target.col:
-                print(f'{len(open)+len(closed)} checks')
-                return current
-            
-            for neighbor in current.get_neighbors():
-                if neighbor.is_blocked(self) or neighbor.is_in_list(closed):
-                    continue
+        if current.is_equal_to(self.target):
+            print(f'{len(open)+len(closed)} checks')
+            return current
+        
+        for neighbor in current.get_neighbors():
+            if neighbor.is_blocked(self) or neighbor.is_in_list(closed):
+                continue
 
-                if not neighbor in open:
-                    open.append(neighbor)
-            
-            print(f'{current.get_total_distance(self.start, self.target)} {current.get_coords()}')
+            if not neighbor in open:
+                open.append(neighbor)
+        
+        print(f'{current.get_total_distance(self.start, self.target)} {current.get_coords()} {current.parent} {[node.get_coords() for node in open]}')
     
     def get_path(self):
         return self.get_end_of_path().get_path_as_list()
