@@ -8,11 +8,11 @@ class Path:
     
     def get_list(self):
         node = self.node
-        path_list = [(node.row, node.col)]
+        path_list = [node]
 
         while node.parent != None:
             node = node.parent
-            path_list.append((node.row, node.col))
+            path_list.append(node)
 
         path_list.reverse()
         return path_list
