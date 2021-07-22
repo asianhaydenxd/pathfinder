@@ -34,7 +34,9 @@ class Map:
         open = []
         closed = []
         open.append(self.start)
-
+        return self.iterate_through_path(open, closed)
+    
+    def iterate_through_path(self, open, closed):
         while True:
             next_node = self.get_next_node(open, closed)
             if next_node != None:
