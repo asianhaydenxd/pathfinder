@@ -10,7 +10,7 @@ class Path:
         node = self.node
         path_list = [node]
 
-        while node.parent != None:
+        while node.parent:
             node = node.parent
             path_list.append(node)
 

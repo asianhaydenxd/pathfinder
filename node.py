@@ -6,6 +6,9 @@ class Node:
     
     def __str__(self):
         return str(self.__dict__)
+
+    def __eq__(self, other):
+        return self.row == other.row and self.col == other.col
     
     def get_coords(self):
         return (self.row, self.col)
@@ -56,12 +59,9 @@ class Node:
     
     def is_in_list(self, list):
         for node in list:
-            if self.is_equal_to(node):
+            if self == node:
                 return True
         return False
-    
-    def is_equal_to(self, node):
-        return node.row == self.row and node.col == self.col
     
     def list_coords(node_list):
         return [node.get_coords() for node in node_list]

@@ -39,7 +39,7 @@ class Map:
     def get_final_node(self, open, closed):
         while True:
             next_node = self.get_next_node(open, closed)
-            if next_node != None:
+            if next_node:
                 return Path(next_node, open, closed)
     
     def get_next_node(self, open, closed):
@@ -47,7 +47,7 @@ class Map:
         open.remove(current)
         closed.append(current)
 
-        if current.is_equal_to(self.target):
+        if current == self.target:
             return current
 
         self.add_neighbors_to_open(current, open, closed)

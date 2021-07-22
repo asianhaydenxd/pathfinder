@@ -45,7 +45,7 @@ class PlotMap:
             matrix[row][col] = val
     
     def is_at_end(self, node):
-        return node.is_equal_to(self.map.start) or node.is_equal_to(self.map.target)
+        return node == self.map.start or node == self.map.target
     
     def show_plot_window(matrix):
         plt.imshow(matrix, cmap=PlotMap.get_colors(COLORS))
