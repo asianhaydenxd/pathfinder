@@ -1,3 +1,4 @@
+from copy import deepcopy
 from enum import Enum, unique
 from path import Path
 import node as Node
@@ -36,7 +37,7 @@ class MapCompiler:
         return len(keys) != len(set(keys))
     
     def compile(self, force=False):
-        compiled_matrix = self.matrix
+        compiled_matrix = deepcopy(self.matrix)
         for row_i, row in enumerate(compiled_matrix):
             for col_i, node in enumerate(row):
                 try:
@@ -45,7 +46,6 @@ class MapCompiler:
                     if not force:
                         raise ValueError('MapCompiler matrix contains uncompilable value.')
                     compiled_matrix[row_i][col_i] = NodeType.BLANK.value
-
         return compiled_matrix
 
 class Map:
@@ -109,7 +109,6 @@ class Map:
             hashmap.append(node_total_distance)
             if min(hashmap) == node_total_distance:
                 best_node = node
-        
         return best_node
     
     def get_path_list(self):
