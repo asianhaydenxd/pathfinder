@@ -62,3 +62,14 @@ class Map:
     
     def get_path_list(self):
         return self.get_path().get_list()
+    
+    def new(rows=5, cols=5, start=(0,0), target=(4,4)):
+        new_map = [[0 for _ in range(cols)] for _ in range(rows)]
+
+        start_row, start_col = start
+        target_row, target_col = target
+
+        new_map[start_row][start_col] = NodeState.START.value
+        new_map[target_row][target_col] = NodeState.TARGET.value
+
+        return Map(new_map)
