@@ -37,11 +37,17 @@ class MapCompiler:
     def has_duplicate_values(self, keys):
         return len(keys) != len(set(keys))
     
-    def compile(self):
+    def compile(self, force=False):
         compiled_matrix = self.matrix
         for row_i, row in enumerate(compiled_matrix):
             for col_i, node in enumerate(row):
-                compiled_matrix[row_i][col_i] = self.keys[node]
+                try:
+                    compiled_matrix[row_i][col_i] = self.keys[node]
+                except KeyError:
+                    if not force:
+                        raise ValueError('MapCompiler matrix contains uncompilable value.')
+                    compiled_matrix[row_i][col_i] = NodeType.BLANK.value
+
         return compiled_matrix
 
 class Map:
