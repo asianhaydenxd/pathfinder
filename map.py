@@ -89,26 +89,20 @@ class Map:
             row, col = node
             self.matrix[row][col] = NodeState.WALL.value
     
-    def relocate_start(self, new_start_coords: tuple):
-        prev_row, prev_col = self.start.get_coords()
-        new_row, new_col = new_start_coords
-        new_start_node = Node(new_row, new_col, None)
-
-        if new_start_node.is_out_of_bounds(self):
-            raise ValueError('The provided coordinates for the new start node are out of bounds.')
-
-        self.matrix[prev_row][prev_col] = NodeState.BLANK.value
-        self.matrix[new_row][new_col] = NodeState.START.value
-        self.start = new_start_node
+    def relocate_start(self, new_coords: tuple):
+        self.start = self.relocate_node(self.start, new_coords, 'START')
     
-    def relocate_target(self, new_target_coords: tuple):
-        prev_row, prev_col = self.target.get_coords()
-        new_row, new_col = new_target_coords
-        new_target_node = Node(new_row, new_col, None)
+    def relocate_target(self, new_coords: tuple):
+        self.target = self.relocate_node(self.target, new_coords, 'TARGET')
+    
+    def relocate_node(self, node, new_coords, state) -> Node:
+        prev_row, prev_col = node.get_coords()
+        new_row, new_col = new_coords
+        new_node = Node(new_row, new_col, None)
 
-        if new_target_node.is_out_of_bounds(self):
-            raise ValueError('The provided coordinates for the new target node are out of bounds.')
-
+        if new_node.is_out_of_bounds(self):
+            raise ValueError(f'The provided coordinates for the new {state} node are out of bounds.')
+        
         self.matrix[prev_row][prev_col] = NodeState.BLANK.value
-        self.matrix[new_row][new_col] = NodeState.TARGET.value
-        self.target = new_target_node
+        self.matrix[new_row][new_col] = NodeState[state].value
+        return new_node
