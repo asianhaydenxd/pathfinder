@@ -53,19 +53,19 @@ class MapCompiler:
 class Map:
     def __init__(self, matrix):
         self.matrix = matrix
-        self.start = self.get_node_with_state(NodeType.START)
-        self.target = self.get_node_with_state(NodeType.TARGET)
+        self.start = self.get_node_of_type(NodeType.START.value)
+        self.target = self.get_node_of_type(NodeType.TARGET.value)
         self.height = len(self.matrix)
         self.width = len(self.matrix[0])
     
     def __str__(self):
         return str(self.matrix)
 
-    def get_node_with_state(self, state):
+    def get_node_of_type(self, type):
         for index, row in enumerate(self.matrix):
-            if state.value in row:
-                return Node(index, row.index(state.value), None)
-        raise ValueError(f'Value {state} ({state.value}) does not exist in map.')
+            if type in row:
+                return Node(index, row.index(type), None)
+        raise ValueError(f'Value {type} does not exist in map.')
     
     def get_path(self):
         open = []
@@ -123,8 +123,8 @@ class Map:
         start_row, start_col = start
         target_row, target_col = target
 
-        new_map[start_row][start_col] = NodeState.START.value
-        new_map[target_row][target_col] = NodeState.TARGET.value
+        new_map[start_row][start_col] = NodeType.START.value
+        new_map[target_row][target_col] = NodeType.TARGET.value
 
         return Map(new_map)
     
@@ -136,22 +136,22 @@ class Map:
         
         for node in coords:
             row, col = node
-            self.matrix[row][col] = NodeState.WALL.value
+            self.matrix[row][col] = NodeType.WALL.value
     
     def relocate_start(self, new_coords: tuple):
-        self.start = self.relocate_node(self.start, new_coords, 'START')
+        self.start = self.relocate_node(self.start, NodeType.START.value, new_coords)
     
     def relocate_target(self, new_coords: tuple):
-        self.target = self.relocate_node(self.target, new_coords, 'TARGET')
+        self.target = self.relocate_node(self.target, NodeType.TARGET.value, new_coords)
     
-    def relocate_node(self, node, new_coords, state) -> Node:
+    def relocate_node(self, node, type, new_coords) -> Node:
         prev_row, prev_col = node.get_coords()
         new_row, new_col = new_coords
         new_node = Node(new_row, new_col, None)
 
         if new_node.is_out_of_bounds(self):
-            raise ValueError(f'The provided coordinates for the new {state} node are out of bounds.')
+            raise ValueError(f'The provided coordinates for the new {type} node are out of bounds.')
         
-        self.matrix[prev_row][prev_col] = NodeState.BLANK.value
-        self.matrix[new_row][new_col] = NodeState[state].value
+        self.matrix[prev_row][prev_col] = NodeType.BLANK.value
+        self.matrix[new_row][new_col] = type
         return new_node
