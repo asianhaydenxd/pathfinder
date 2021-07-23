@@ -36,6 +36,13 @@ class MapCompiler:
     
     def has_duplicate_values(self, keys):
         return len(keys) != len(set(keys))
+    
+    def compile(self):
+        compiled_matrix = self.matrix
+        for row_i, row in enumerate(compiled_matrix):
+            for col_i, node in enumerate(row):
+                compiled_matrix[row_i][col_i] = self.keys[node]
+        return compiled_matrix
 
 class Map:
     def __init__(self, matrix):
