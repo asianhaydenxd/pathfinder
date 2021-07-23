@@ -14,19 +14,17 @@ DEFAULT_COLORMAP = {
 class Color:
     def __init__(self, colormap):
         colormap = self.fill_missing_keys(colormap)
-        self.colors = self.get_colors(colormap)
-        self.base_colors = self.get_base_colors(colormap)
+        self.colors = colormap
+        self.base_colors = self.get_init_colors(colormap)
     
     def fill_missing_keys(self, colormap):
         for type in NodeType:
-            if not type in colormap:
+            if not type.value in colormap:
                 colormap[type] = DEFAULT_COLORMAP[type]
         return colormap
-
-    def get_colors(self, colormap):
-        return [colormap[type] for type in colormap]
     
-    def get_base_colors(self, colormap):
+    def get_init_colors(self, colormap):
+        return {type: color for (type, color) in colormap.items() if type.is_from_init}
         return [colormap[type] for type in colormap if type.is_from_init]
 
 class PlotMap:
@@ -44,13 +42,14 @@ class PlotMap:
     def show_plot_window(self, matrix, base_only=False):
         plt.xlabel('Col')
         plt.ylabel('Row')
-        plt.imshow(self.get_color_matrix(matrix, self.color.base_colors if base_only else self.color.colors))
+        plt.imshow(self.get_color_matrix(matrix, self.color.colors))
         plt.show()
     
     def get_color_matrix(self, matrix, colormap):
         for row_i, row in enumerate(matrix):
             for col_i, node in enumerate(row):
                 matrix[row_i][col_i] = colormap[node]
+        return matrix
     
     def append_path(self):
         matrix = self.map.matrix

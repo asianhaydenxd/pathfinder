@@ -1,6 +1,6 @@
 from map import Map, MapCompiler
 from node import Node
-# from plotmap import PlotMap
+from plotmap import PlotMap
 
 # small_map = Map([
 #     [0, 0, 0, 0, 0],
@@ -28,9 +28,9 @@ custom_map.append_walls([(6, 1), (6, 2), (5, 3), (4, 4)])
 custom_map.relocate_start((0,1))
 custom_map.relocate_target((6,12))
 
-# pltmap = PlotMap(large_map)
-# pltmap.plot(plain=True)
-# pltmap.plot()
+pltmap = PlotMap(large_map)
+pltmap.plot(plain=True)
+pltmap.plot()
 
 path = large_map.get_path()
 # print(f'Node: {path.node}')
