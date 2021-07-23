@@ -49,13 +49,14 @@ class Node:
         return neighbors
     
     def is_blocked(self, map):
-        if self.is_outside_lower_bound():
-            return True
-        if self.is_outside_upper_bound(map):
+        if self.is_out_of_bounds(map):
             return True
         if self.is_wall(map):
             return True
         return False
+    
+    def is_out_of_bounds(self, map):
+        return self.is_outside_lower_bound() or self.is_outside_upper_bound(map)
     
     def is_outside_lower_bound(self):
         return self.row < 0 or self.col < 0

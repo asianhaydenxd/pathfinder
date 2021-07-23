@@ -93,7 +93,7 @@ class Map:
         start_row, start_col = new_start_coords
         new_start_node = Node(start_row, start_col, None)
 
-        if new_start_node.is_outside_lower_bound() or new_start_node.is_outside_upper_bound(self):
+        if new_start_node.is_out_of_bounds(self):
             raise ValueError('The provided coordinates for the new start node are out of bounds.')
 
         prev_row, prev_col = self.start.get_coords()
@@ -106,7 +106,7 @@ class Map:
         target_row, target_col = new_target_coords
         new_target_node = Node(target_row, target_col, None)
 
-        if new_target_node.is_outside_lower_bound() or new_target_node.is_outside_upper_bound(self):
+        if new_target_node.is_out_of_bounds(self):
             raise ValueError('The provided coordinates for the new target node are out of bounds.')
 
         prev_row, prev_col = self.target.get_coords()
