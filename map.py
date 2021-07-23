@@ -1,6 +1,6 @@
 from enum import Enum, unique
-from node import Node
 from path import Path
+import node as Node
 
 class NodeTypeInitiator:
     def __init__(self, type):
