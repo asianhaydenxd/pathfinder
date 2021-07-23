@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, unique
 from node import Node
 from path import Path
 
@@ -6,6 +6,7 @@ class NodeTypeInitiator:
     def __init__(self, type):
         self.type = type
 
+@unique
 class NodeType(Enum):
     BLANK = NodeTypeInitiator('BLANK')
     WALL = NodeTypeInitiator('WALL')
