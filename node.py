@@ -1,4 +1,6 @@
-class NodeState:
+from enum import Enum
+
+class NodeState(Enum):
     BLANK = 0
     WALL = 1
     START = 2
