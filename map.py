@@ -21,33 +21,6 @@ class NodeType(Enum):
     OPEN = NodeTypeInitiator('OPEN', is_from_init=False)
     CLOSED = NodeTypeInitiator('CLOSED', is_from_init=False)
 
-class MapCompiler:
-    def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
-        self.matrix = matrix
-        if self.has_duplicate_values([blank, wall, start, target]):
-            raise ValueError('MapCompiler keys cannot have duplicate values.')
-        self.keys = {
-            blank: NodeType.BLANK.value,
-            wall: NodeType.WALL.value,
-            start: NodeType.START.value,
-            target: NodeType.TARGET.value,
-        }
-    
-    def has_duplicate_values(self, keys):
-        return len(keys) != len(set(keys))
-    
-    def compile(self, force=False):
-        compiled_matrix = deepcopy(self.matrix)
-        for row_i, row in enumerate(compiled_matrix):
-            for col_i, node in enumerate(row):
-                try:
-                    compiled_matrix[row_i][col_i] = self.keys[node]
-                except KeyError:
-                    if not force:
-                        raise ValueError('MapCompiler matrix contains uncompilable value.')
-                    compiled_matrix[row_i][col_i] = NodeType.BLANK.value
-        return compiled_matrix
-
 class Map:
     def __init__(self, matrix):
         self.matrix = matrix
@@ -150,3 +123,30 @@ class Map:
         self.matrix[prev_row][prev_col] = NodeType.BLANK.value
         self.matrix[new_row][new_col] = type
         return new_node
+
+class MapCompiler:
+    def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
+        self.matrix = matrix
+        if self.has_duplicate_values([blank, wall, start, target]):
+            raise ValueError('MapCompiler keys cannot have duplicate values.')
+        self.keys = {
+            blank: NodeType.BLANK.value,
+            wall: NodeType.WALL.value,
+            start: NodeType.START.value,
+            target: NodeType.TARGET.value,
+        }
+    
+    def has_duplicate_values(self, keys):
+        return len(keys) != len(set(keys))
+    
+    def compile(self, force=False):
+        compiled_matrix = deepcopy(self.matrix)
+        for row_i, row in enumerate(compiled_matrix):
+            for col_i, node in enumerate(row):
+                try:
+                    compiled_matrix[row_i][col_i] = self.keys[node]
+                except KeyError:
+                    if not force:
+                        raise ValueError('MapCompiler matrix contains uncompilable value.')
+                    compiled_matrix[row_i][col_i] = NodeType.BLANK.value
+        return compiled_matrix
