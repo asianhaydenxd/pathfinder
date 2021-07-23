@@ -116,7 +116,7 @@ class Map:
         return self.get_path().get_list()
     
     def new(rows=5, cols=5, start=(0,0), target=(4,4)):
-        new_map = [[0 for _ in range(cols)] for _ in range(rows)]
+        new_map = [[NodeType.BLANK.value for _ in range(cols)] for _ in range(rows)]
 
         start_row, start_col = start
         target_row, target_col = target
