@@ -1,4 +1,4 @@
-from map import NodeType
+import map as Map
 
 class Node:
     def __init__(self, row, col, parent):
@@ -56,7 +56,7 @@ class Node:
         return self.row + 1 > map.height or self.col + 1 > map.width
     
     def is_wall(self, map):
-        return map.matrix[self.row][self.col] == NodeState.WALL.value
+        return map.matrix[self.row][self.col] == Map.NodeType.WALL.value
     
     def is_in_list(self, list):
         for node in list:
