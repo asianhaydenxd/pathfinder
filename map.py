@@ -4,19 +4,19 @@ from path import Path
 class Map:
     def __init__(self, matrix):
         self.matrix = matrix
-        self.start = self.get_node_with_value(NodeState.START)
-        self.target = self.get_node_with_value(NodeState.TARGET)
+        self.start = self.get_node_with_state(NodeState.START)
+        self.target = self.get_node_with_state(NodeState.TARGET)
         self.height = len(self.matrix)
         self.width = len(self.matrix[0])
     
     def __str__(self):
         return str(self.matrix)
 
-    def get_node_with_value(self, target):
+    def get_node_with_state(self, state):
         for index, row in enumerate(self.matrix):
-            if target in row:
-                return Node(index, row.index(target), None)
-        raise ValueError('No value exists in map')
+            if state.value in row:
+                return Node(index, row.index(state.value), None)
+        raise ValueError(f'Value {state} ({state.value}) does not exist in map.')
 
     def get_best_node(self, node_list):
         hashmap = []
