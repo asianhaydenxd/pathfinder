@@ -22,17 +22,17 @@ class NodeType(Enum):
 class MapCompiler:
     def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
         self.matrix = matrix
-        self.keys = {
-            NodeType.BLANK: blank,
-            NodeType.WALL: wall,
-            NodeType.START: start,
-            NodeType.TARGET: target,
-        }
-        if self.has_duplicate_values():
+        if self.has_duplicate_values([blank, wall, start, target]):
             raise ValueError('MapCompiler keys cannot have duplicate values.')
+        self.keys = {
+            blank: NodeType.BLANK,
+            wall: NodeType.WALL,
+            start: NodeType.START,
+            target: NodeType.TARGET,
+        }
     
-    def has_duplicate_values(self):
-        return len(dict) == len(set(self.keys.values()))
+    def has_duplicate_values(self, keys):
+        return len(keys) == len(set(keys))
 
 class Map:
     def __init__(self, matrix):
