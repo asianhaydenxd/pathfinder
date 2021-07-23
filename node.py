@@ -58,11 +58,5 @@ class Node:
     def is_wall(self, map):
         return map.matrix[self.row][self.col] == Map.NodeType.WALL.value
     
-    def is_in_list(self, list):
-        for node in list:
-            if self == node:
-                return True
-        return False
-    
     def list_coords(node_list):
         return [node.get_coords() for node in node_list]

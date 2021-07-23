@@ -91,7 +91,7 @@ class Map:
     
     def add_neighbors_to_open(self, node, open, closed):
         for neighbor in node.get_neighbors():
-            if neighbor.is_blocked(self) or neighbor.is_in_list(closed):
+            if neighbor.is_blocked(self) or neighbor in closed:
                 continue
             
             ideal_g_score = node.g_score + 1
