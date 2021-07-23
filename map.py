@@ -14,6 +14,8 @@ class NodeType(Enum):
     PATH = NodeTypeInitiator('PATH')
     OPEN = NodeTypeInitiator('OPEN')
     CLOSED = NodeTypeInitiator('CLOSED')
+    
+    FROM_ASSIGN = [BLANK, WALL, START, TARGET]
     FROM_PATH = [PATH, OPEN, CLOSED]
 
 class MapCompiler:
