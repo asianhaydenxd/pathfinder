@@ -2,19 +2,15 @@ from map import Map, NodeType
 from matplotlib import pyplot as plt
 from matplotlib import colors
 
-DEFAULT_BASE_COLORMAP = {
-    NodeState.BLANK: '#fff',
-    NodeState.WALL: '#033',
-    NodeState.START: '#193',
-    NodeState.TARGET: '#c32'
+DEFAULT_COLORMAP = {
+    NodeType.BLANK.value: (255, 255, 255), # White
+    NodeType.WALL.value: (0, 0, 0), # Black
+    NodeType.START.value: (22, 219, 75), # Green
+    NodeType.TARGET.value: (232, 55, 35), # Red
+    NodeType.PATH.value: (255, 205, 54), # Yellow
+    NodeType.CLOSED.value: (58, 145, 214), # Blue
+    NodeType.OPEN.value: (39, 117, 179), # Darker Blue
 }
-
-DEFAULT_FULL_COLORMAP = {
-    NodeState.PATH: '#db1',
-    NodeState.CLOSED: '#27b',
-    NodeState.OPEN: '#1bd'
-}
-DEFAULT_FULL_COLORMAP.update(DEFAULT_BASE_COLORMAP)
 
 class Color:
     def __init__(self, colormap):
