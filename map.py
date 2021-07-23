@@ -3,8 +3,9 @@ from path import Path
 import node as Node
 
 class NodeTypeInitiator:
-    def __init__(self, type):
+    def __init__(self, type, is_from_init=True):
         self.type = type
+        self.is_from_init = is_from_init
 
     def __str__(self):
         return f'NodeType.{self.type}.value'
@@ -15,12 +16,9 @@ class NodeType(Enum):
     WALL = NodeTypeInitiator('WALL')
     START = NodeTypeInitiator('START')
     TARGET = NodeTypeInitiator('TARGET')
-    PATH = NodeTypeInitiator('PATH')
-    OPEN = NodeTypeInitiator('OPEN')
-    CLOSED = NodeTypeInitiator('CLOSED')
-    
-    FROM_ASSIGN = [BLANK, WALL, START, TARGET]
-    FROM_PATH = [PATH, OPEN, CLOSED]
+    PATH = NodeTypeInitiator('PATH', is_from_init=False)
+    OPEN = NodeTypeInitiator('OPEN', is_from_init=False)
+    CLOSED = NodeTypeInitiator('CLOSED', is_from_init=False)
 
 class MapCompiler:
     def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
