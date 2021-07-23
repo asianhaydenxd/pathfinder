@@ -25,6 +25,8 @@ large_map = Map([
 
 custom_map = Map.new(7, 15, (0, 0), (6, 14))
 custom_map.append_walls([(6, 0)])
+custom_map.relocate_start((0,1))
+custom_map.relocate_target((4,1))
 
 pltmap = PlotMap(custom_map)
 pltmap.plot()

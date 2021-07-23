@@ -88,3 +88,29 @@ class Map:
         for node in coords:
             row, col = node
             self.matrix[row][col] = NodeState.WALL.value
+    
+    def relocate_start(self, new_start_coords: tuple):
+        start_row, start_col = new_start_coords
+        new_start_node = Node(start_row, start_col, None)
+
+        if new_start_node.is_outside_lower_bound() or new_start_node.is_outside_upper_bound(self):
+            raise ValueError('The provided coordinates for the new start node are out of bounds.')
+
+        prev_row, prev_col = self.start.get_coords()
+        self.matrix[prev_row][prev_col] = NodeState.BLANK.value
+
+        self.matrix[start_row][start_col] = NodeState.START.value
+        self.start = new_start_node
+    
+    def relocate_target(self, new_target_coords: tuple):
+        target_row, target_col = new_target_coords
+        new_target_node = Node(target_row, target_col, None)
+
+        if new_target_node.is_outside_lower_bound() or new_target_node.is_outside_upper_bound(self):
+            raise ValueError('The provided coordinates for the new target node are out of bounds.')
+
+        prev_row, prev_col = self.target.get_coords()
+        self.matrix[prev_row][prev_col] = NodeState.BLANK.value
+
+        self.matrix[target_row][target_col] = NodeState.TARGET.value
+        self.target = new_target_node
