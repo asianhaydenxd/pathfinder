@@ -1,11 +1,26 @@
-from node import Node, NodeState
+from enum import Enum
+from node import Node
 from path import Path
+
+class NodeTypeInitiator:
+    def __init__(self, type):
+        self.type = type
+
+class NodeType(Enum):
+    BLANK = NodeTypeInitiator('BLANK')
+    WALL = NodeTypeInitiator('WALL')
+    START = NodeTypeInitiator('START')
+    TARGET = NodeTypeInitiator('TARGET')
+
+class MapCompiler:
+    def __init__(self, matrix):
+        self.matrix = matrix
 
 class Map:
     def __init__(self, matrix):
         self.matrix = matrix
-        self.start = self.get_node_with_state(NodeState.START)
-        self.target = self.get_node_with_state(NodeState.TARGET)
+        self.start = self.get_node_with_state(NodeType.START)
+        self.target = self.get_node_with_state(NodeType.TARGET)
         self.height = len(self.matrix)
         self.width = len(self.matrix[0])
     

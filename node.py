@@ -1,13 +1,3 @@
-from enum import Enum
-
-class NodeState(Enum):
-    BLANK = 0
-    WALL = 1
-    START = 2
-    TARGET = 3
-    PATH = 4
-    CLOSED = 5
-    OPEN = 6
 
 class Node:
     def __init__(self, row, col, parent):
