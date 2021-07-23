@@ -1,4 +1,5 @@
 from map import Map, NodeType
+from copy import deepcopy
 from matplotlib import pyplot as plt
 
 DEFAULT_COLORMAP = {
@@ -28,22 +29,24 @@ class PlotMap:
     
     def plot(self, plain=False):
         if plain:
-            self.show_plot_window(self.map.matrix, base_only=True)
+            self.show_plot_window(self.map.matrix)
             return
         path_matrix = self.append_path()
         self.show_plot_window(path_matrix)
     
-    def show_plot_window(self, matrix, base_only=False):
+    def show_plot_window(self, matrix):
         plt.xlabel('Col')
         plt.ylabel('Row')
-        plt.imshow(self.get_color_matrix(matrix, self.color.colors))
+        color_matrix = self.get_color_matrix(matrix, self.color.colors)
+        plt.imshow(color_matrix)
         plt.show()
     
     def get_color_matrix(self, matrix, colormap):
+        color_matrix = deepcopy(matrix)
         for row_i, row in enumerate(matrix):
             for col_i, node in enumerate(row):
-                matrix[row_i][col_i] = colormap[node]
-        return matrix
+                color_matrix[row_i][col_i] = colormap[node]
+        return color_matrix
     
     def append_path(self):
         matrix = self.map.matrix
