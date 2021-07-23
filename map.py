@@ -28,6 +28,11 @@ class MapCompiler:
             NodeType.START: start,
             NodeType.TARGET: target,
         }
+        if self.has_duplicate_values(self.keys):
+            raise ValueError('MapCompiler keys cannot have duplicate values.')
+    
+    def has_duplicate_values(self, dict):
+        return len(dict) == len(set(dict.values()))
 
 class Map:
     def __init__(self, matrix):
