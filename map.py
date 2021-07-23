@@ -112,9 +112,6 @@ class Map:
                 best_node = node
         return best_node
     
-    def get_path_list(self):
-        return self.get_path().get_list()
-    
     def new(rows=5, cols=5, start=(0,0), target=(4,4)):
         new_map = [[NodeType.BLANK.value for _ in range(cols)] for _ in range(rows)]
 

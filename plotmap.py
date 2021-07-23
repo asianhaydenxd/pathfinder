@@ -50,19 +50,20 @@ class PlotMap:
     
     def append_path(self):
         matrix = self.map.matrix
-        self.append_open_nodes(matrix)
-        self.append_closed_nodes(matrix)
-        self.append_path_nodes(matrix)
+        path = self.map.get_path()
+        self.append_open_nodes(matrix, path)
+        self.append_closed_nodes(matrix, path)
+        self.append_path_nodes(matrix, path)
         return matrix
     
-    def append_open_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().open, NodeType.OPEN.value)
+    def append_open_nodes(self, matrix, path):
+        self.replace_matrix(matrix, path.open, NodeType.OPEN.value)
     
-    def append_closed_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().closed, NodeType.CLOSED.value)
+    def append_closed_nodes(self, matrix, path):
+        self.replace_matrix(matrix, path.closed, NodeType.CLOSED.value)
     
-    def append_path_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path_list(), NodeType.PATH.value)
+    def append_path_nodes(self, matrix, path):
+        self.replace_matrix(matrix, path.get_list(), NodeType.PATH.value)
     
     def replace_matrix(self, matrix, list, type):
         for node in list:
