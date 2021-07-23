@@ -6,6 +6,9 @@ class NodeTypeInitiator:
     def __init__(self, type):
         self.type = type
 
+    def __str__(self):
+        return f'NodeType.{self.type}.value'
+
 @unique
 class NodeType(Enum):
     BLANK = NodeTypeInitiator('BLANK')
@@ -25,10 +28,10 @@ class MapCompiler:
         if self.has_duplicate_values([blank, wall, start, target]):
             raise ValueError('MapCompiler keys cannot have duplicate values.')
         self.keys = {
-            blank: NodeType.BLANK,
-            wall: NodeType.WALL,
-            start: NodeType.START,
-            target: NodeType.TARGET,
+            blank: NodeType.BLANK.value,
+            wall: NodeType.WALL.value,
+            start: NodeType.START.value,
+            target: NodeType.TARGET.value,
         }
     
     def has_duplicate_values(self, keys):
