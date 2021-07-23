@@ -62,7 +62,7 @@ class Map:
     def get_node_of_type(self, type):
         for index, row in enumerate(self.matrix):
             if type in row:
-                return Node(index, row.index(type), None)
+                return Node.Node(index, row.index(type), None)
         raise ValueError(f'Value {type} does not exist in map.')
     
     def get_path(self):
@@ -142,10 +142,10 @@ class Map:
     def relocate_target(self, new_coords: tuple):
         self.target = self.relocate_node(self.target, NodeType.TARGET.value, new_coords)
     
-    def relocate_node(self, node, type, new_coords) -> Node:
+    def relocate_node(self, node, type, new_coords) -> Node.Node:
         prev_row, prev_col = node.get_coords()
         new_row, new_col = new_coords
-        new_node = Node(new_row, new_col, None)
+        new_node = Node.Node(new_row, new_col, None)
 
         if new_node.is_out_of_bounds(self):
             raise ValueError(f'The provided coordinates for the new {type} node are out of bounds.')
