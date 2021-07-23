@@ -13,19 +13,13 @@ DEFAULT_COLORMAP = {
 
 class Color:
     def __init__(self, colormap):
-        colormap = self.fill_missing_keys(colormap)
-        self.colors = colormap
-        self.base_colors = self.get_init_colors(colormap)
+        self.colors = self.fill_missing_keys(colormap)
     
     def fill_missing_keys(self, colormap):
         for type in NodeType:
             if not type.value in colormap:
                 colormap[type] = DEFAULT_COLORMAP[type]
         return colormap
-    
-    def get_init_colors(self, colormap):
-        return {type: color for (type, color) in colormap.items() if type.is_from_init}
-        return [colormap[type] for type in colormap if type.is_from_init]
 
 class PlotMap:
     def __init__(self, map: Map, colormap=DEFAULT_COLORMAP):
