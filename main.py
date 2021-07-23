@@ -23,7 +23,11 @@ large_map = Map([
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ])
 
-custom_map = Map.new(20, 15, (0, 0), (19, 14))
+custom_map = Map.new(7, 15, (0, 0), (6, 14))
+custom_map.append_walls([(6, 0)])
+
+pltmap = PlotMap(custom_map)
+pltmap.plot()
 
 # path = custom_map.get_path()
 # print(f'Node: {path.node}')
@@ -31,6 +35,3 @@ custom_map = Map.new(20, 15, (0, 0), (19, 14))
 # print(f'Closed: {Node.list_coords(path.closed)}')
 # print(f'Checks: {path.checks}')
 # print(f'List: {Node.list_coords(path.list)}')
-
-pltmap = PlotMap(large_map)
-pltmap.plot()

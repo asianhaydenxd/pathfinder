@@ -78,3 +78,13 @@ class Map:
         new_map[target_row][target_col] = NodeState.TARGET.value
 
         return Map(new_map)
+    
+    def append_walls(self, coords: list):
+        if self.start.get_coords() in coords:
+            raise ValueError('Wall cannot be appended on top of the start node.')
+        if self.target.get_coords() in coords:
+            raise ValueError('Wall cannot be appended on top of the target node.')
+        
+        for node in coords:
+            row, col = node
+            self.matrix[row][col] = NodeState.WALL.value
