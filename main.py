@@ -28,7 +28,8 @@ custom_map.append_walls([(6, 1), (6, 2), (5, 3), (4, 4)])
 custom_map.relocate_start((0,1))
 custom_map.relocate_target((6,12))
 
-pltmap = PlotMap(custom_map)
+pltmap = PlotMap(large_map)
+pltmap.plot(plain=True)
 pltmap.plot()
 
 # path = custom_map.get_path()
