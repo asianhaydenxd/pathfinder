@@ -1,6 +1,5 @@
 from map import Map, NodeType
 from matplotlib import pyplot as plt
-from matplotlib import colors
 
 DEFAULT_COLORMAP = {
     NodeType.BLANK: (255, 255, 255), # White
@@ -31,7 +30,7 @@ class Color:
         return [colormap[type] for type in colormap if type.is_from_init]
 
 class PlotMap:
-    def __init__(self, map: Map, colormap=DEFAULT_FULL_COLORMAP):
+    def __init__(self, map: Map, colormap=DEFAULT_COLORMAP):
         self.map = map
         self.color = Color(colormap)
     
@@ -40,7 +39,18 @@ class PlotMap:
             self.show_plot_window(self.map.matrix, base_only=True)
             return
         path_matrix = self.append_path()
-        self.show_plot_window(path_matrix, base_only=False)
+        self.show_plot_window(path_matrix)
+    
+    def show_plot_window(self, matrix, base_only=False):
+        plt.xlabel('Col')
+        plt.ylabel('Row')
+        plt.imshow(self.get_color_matrix(matrix, self.color.base_colors if base_only else self.color.colors))
+        plt.show()
+    
+    def get_color_matrix(self, matrix, colormap):
+        for row_i, row in enumerate(matrix):
+            for col_i, node in enumerate(row):
+                matrix[row_i][col_i] = colormap[node]
     
     def append_path(self):
         matrix = self.map.matrix
@@ -50,29 +60,20 @@ class PlotMap:
         return matrix
     
     def append_open_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().open, NodeState.OPEN.value)
+        self.replace_matrix(matrix, self.map.get_path().open, NodeType.OPEN.value)
     
     def append_closed_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().closed, NodeState.CLOSED.value)
+        self.replace_matrix(matrix, self.map.get_path().closed, NodeType.CLOSED.value)
     
     def append_path_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path_list(), NodeState.PATH.value)
+        self.replace_matrix(matrix, self.map.get_path_list(), NodeType.PATH.value)
     
-    def replace_matrix(self, matrix, list, val):
+    def replace_matrix(self, matrix, list, type):
         for node in list:
             if self.is_at_end(node):
                 continue
             row, col = node.get_coords()
-            matrix[row][col] = val
+            matrix[row][col] = type
     
     def is_at_end(self, node):
         return node == self.map.start or node == self.map.target
-    
-    def show_plot_window(self, matrix, base_only=False):
-        plt.xlabel('Col')
-        plt.ylabel('Row')
-        plt.imshow(matrix, cmap=PlotMap.get_colors(self.color.base_colors if base_only else self.color.colors))
-        plt.show()
-    
-    def get_colors(colormap):
-        return colors.ListedColormap(colormap)
