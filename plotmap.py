@@ -79,6 +79,8 @@ class PlotMap:
         return node == self.map.start or node == self.map.target
     
     def show_plot_window(self, matrix, base_only=False):
+        plt.xlabel('Col')
+        plt.ylabel('Row')
         plt.imshow(matrix, cmap=PlotMap.get_colors(self.color.base_colors if base_only else self.color.colors))
         plt.show()
     
