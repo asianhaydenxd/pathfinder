@@ -17,18 +17,6 @@ class Map:
             if state.value in row:
                 return Node(index, row.index(state.value), None)
         raise ValueError(f'Value {state} ({state.value}) does not exist in map.')
-
-    def get_best_node(self, node_list):
-        hashmap = []
-        best_node = node_list[0]
-        
-        for node in node_list:
-            node_total_distance = node.get_total_distance(self.start, self.target)
-            hashmap.append(node_total_distance)
-            if min(hashmap) == node_total_distance:
-                best_node = node
-        
-        return best_node
     
     def get_path(self):
         open = []
@@ -59,6 +47,18 @@ class Map:
 
             if not neighbor in open:
                 open.append(neighbor)
+    
+    def get_best_node(self, node_list):
+        hashmap = []
+        best_node = node_list[0]
+        
+        for node in node_list:
+            node_total_distance = node.get_total_distance(self.start, self.target)
+            hashmap.append(node_total_distance)
+            if min(hashmap) == node_total_distance:
+                best_node = node
+        
+        return best_node
     
     def get_path_list(self):
         return self.get_path().get_list()
