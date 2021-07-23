@@ -161,10 +161,13 @@ class MapCompiler:
         compiled_matrix = deepcopy(self.matrix)
         for row_i, row in enumerate(compiled_matrix):
             for col_i, node in enumerate(row):
-                try:
-                    compiled_matrix[row_i][col_i] = self.keys[node]
+                try: compiled_matrix[row_i][col_i] = self.keys[node]
                 except KeyError:
                     if not force:
                         raise ValueError('MapCompiler matrix contains uncompilable value.')
                     compiled_matrix[row_i][col_i] = NodeType.BLANK.value
         return compiled_matrix
+
+class CompiledMap(Map):
+    def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
+        super().__init__(MapCompiler(matrix, blank, wall, start, target).compile())

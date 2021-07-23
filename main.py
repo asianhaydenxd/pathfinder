@@ -1,4 +1,4 @@
-from map import Map, MapCompiler
+from map import CompiledMap, Map
 from node import Node
 from plotmap import PlotMap
 
@@ -10,7 +10,7 @@ from plotmap import PlotMap
 #     [2, 0, 1, 0, 1],
 # ])
 
-large_map = Map(MapCompiler([
+large_map = CompiledMap([
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,1,3,0],
@@ -21,7 +21,7 @@ large_map = Map(MapCompiler([
     [0,0,1,0,0,1,0,0,1,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-]).compile())
+])
 
 custom_map = Map.new(7, 15, (0, 0), (6, 14))
 custom_map.append_walls([(6, 1), (6, 2), (5, 3), (4, 4)])
@@ -33,8 +33,9 @@ pltmap.plot(plain=True)
 pltmap.plot()
 
 path = large_map.get_path()
-# print(f'Node: {path.node}')
-# print(f'Open: {Node.list_coords(path.open)}')
-# print(f'Closed: {Node.list_coords(path.closed)}')
-# print(f'Checks: {path.checks}')
-# print(f'List: {Node.list_coords(path.list)}')
+
+path.node # Last node in path
+path.checks # Number of times the algorithm checked a node
+Node.list_coords(path.open) # Lists all open nodes
+Node.list_coords(path.closed) # Lists all closed nodes
+Node.list_coords(path.list) # Lists the nodes along the path from the starting node
