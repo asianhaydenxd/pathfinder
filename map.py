@@ -11,6 +11,10 @@ class NodeType(Enum):
     WALL = NodeTypeInitiator('WALL')
     START = NodeTypeInitiator('START')
     TARGET = NodeTypeInitiator('TARGET')
+    PATH = NodeTypeInitiator('PATH')
+    OPEN = NodeTypeInitiator('OPEN')
+    CLOSED = NodeTypeInitiator('CLOSED')
+    FROM_PATH = [PATH, OPEN, CLOSED]
 
 class MapCompiler:
     def __init__(self, matrix):
