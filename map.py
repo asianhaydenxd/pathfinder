@@ -73,10 +73,11 @@ class Map:
         return self.get_final_node(open, closed)
     
     def get_final_node(self, open, closed):
-        while True:
+        while len(open) > 0:
             next_node = self.get_next_node(open, closed)
             if next_node:
                 return Path(next_node, open, closed)
+        return Path(self.start, open, closed)
     
     def get_next_node(self, open, closed):
         current = self.get_best_node(open)
