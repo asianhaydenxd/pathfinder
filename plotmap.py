@@ -28,7 +28,7 @@ class Color:
         return [colormap[type] for type in colormap]
     
     def get_base_colors(self, colormap):
-        return [colormap[state] for state in (nodestate for nodestate in DEFAULT_BASE_COLORMAP)]
+        return [colormap[type] for type in colormap if type.is_from_init]
 
 class PlotMap:
     def __init__(self, map: Map, colormap=DEFAULT_FULL_COLORMAP):
