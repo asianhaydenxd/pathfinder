@@ -1,6 +1,5 @@
 from copy import deepcopy
 from enum import Enum, unique
-from path import Path
 import node as Node
 
 class NodeTypeInitiator:
@@ -123,6 +122,25 @@ class Map:
         self.matrix[prev_row][prev_col] = NodeType.BLANK.value
         self.matrix[new_row][new_col] = type
         return new_node
+
+class Path:
+    def __init__(self, node, open_list, closed_list):
+        self.node = node
+        self.open = open_list
+        self.closed = closed_list
+        self.checks = len(self.open)+len(self.closed)
+        self.list = self.get_list()
+    
+    def get_list(self):
+        node = self.node
+        path_list = [node]
+
+        while node.parent:
+            node = node.parent
+            path_list.append(node)
+
+        path_list.reverse()
+        return path_list
 
 class MapCompiler:
     def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
