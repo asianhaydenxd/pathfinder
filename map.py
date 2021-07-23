@@ -19,8 +19,14 @@ class NodeType(Enum):
     FROM_PATH = [PATH, OPEN, CLOSED]
 
 class MapCompiler:
-    def __init__(self, matrix):
+    def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
         self.matrix = matrix
+        self.keys = {
+            NodeType.BLANK: blank,
+            NodeType.WALL: wall,
+            NodeType.START: start,
+            NodeType.TARGET: target,
+        }
 
 class Map:
     def __init__(self, matrix):
