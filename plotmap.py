@@ -3,13 +3,13 @@ from matplotlib import pyplot as plt
 from matplotlib import colors
 
 DEFAULT_COLORMAP = {
-    NodeType.BLANK.value: (255, 255, 255), # White
-    NodeType.WALL.value: (0, 0, 0), # Black
-    NodeType.START.value: (22, 219, 75), # Green
-    NodeType.TARGET.value: (232, 55, 35), # Red
-    NodeType.PATH.value: (255, 205, 54), # Yellow
-    NodeType.CLOSED.value: (58, 145, 214), # Blue
-    NodeType.OPEN.value: (39, 117, 179), # Darker Blue
+    NodeType.BLANK: (255, 255, 255), # White
+    NodeType.WALL: (0, 0, 0), # Black
+    NodeType.START: (22, 219, 75), # Green
+    NodeType.TARGET: (232, 55, 35), # Red
+    NodeType.PATH: (255, 205, 54), # Yellow
+    NodeType.CLOSED: (58, 145, 214), # Blue
+    NodeType.OPEN: (39, 117, 179), # Darker Blue
 }
 
 class Color:
