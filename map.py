@@ -32,7 +32,7 @@ class MapCompiler:
         }
     
     def has_duplicate_values(self, keys):
-        return len(keys) == len(set(keys))
+        return len(keys) != len(set(keys))
 
 class Map:
     def __init__(self, matrix):
