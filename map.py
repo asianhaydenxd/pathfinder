@@ -59,7 +59,7 @@ class Map:
         self.width = len(self.matrix[0])
     
     def __str__(self):
-        return str(self.matrix)
+        return str([[node.type for node in row] for row in self.matrix])
 
     def get_node_of_type(self, type):
         for index, row in enumerate(self.matrix):
