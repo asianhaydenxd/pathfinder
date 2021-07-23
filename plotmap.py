@@ -25,11 +25,7 @@ class Color:
         return colormap
 
     def get_colors(self, colormap):
-        color_list = [colormap[state] for state in NodeState]
-        largest_colormap_int = max(NodeState, key=lambda k: k.value).value
-        if len(color_list) - 1 < largest_colormap_int:
-            raise ValueError('Invalid NodeState static variables (must be consecutive integers from 0)')
-        return color_list
+        return [colormap[type] for type in colormap]
     
     def get_base_colors(self, colormap):
         return [colormap[state] for state in (nodestate for nodestate in DEFAULT_BASE_COLORMAP)]
