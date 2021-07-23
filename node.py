@@ -14,6 +14,7 @@ class Node:
         self.row = row
         self.col = col
         self.parent = parent
+        self.g_score = float('inf')
     
     def __str__(self):
         return str(self.__dict__)
@@ -27,11 +28,14 @@ class Node:
     def get_total_distance(self, start, target):
         return self.get_distance_from_start(start) + self.get_distance_from_target(target)
     
+    def get_f_score(self, target):
+        return self.g_score + self.get_distance_from_target(target)
+    
     def get_distance_from_start(self, start):
         return self.get_horizontal_distance(start) + self.get_vertical_distance(start)
     
     def get_distance_from_target(self, target):
-        return (self.get_horizontal_distance(target) + self.get_vertical_distance(target))*3
+        return (self.get_horizontal_distance(target) + self.get_vertical_distance(target))*1
     
     def get_horizontal_distance(self, node):
         return abs(self.row - node.row)

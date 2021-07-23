@@ -22,6 +22,7 @@ class Map:
         open = []
         closed = []
         open.append(self.start)
+        self.start.g_score = 0
         return self.get_final_node(open, closed)
     
     def get_final_node(self, open, closed):
@@ -32,6 +33,7 @@ class Map:
     
     def get_next_node(self, open, closed):
         current = self.get_best_node(open)
+        
         open.remove(current)
         closed.append(current)
 
@@ -44,16 +46,19 @@ class Map:
         for neighbor in node.get_neighbors():
             if neighbor.is_blocked(self) or neighbor.is_in_list(closed):
                 continue
-
-            if not neighbor in open:
-                open.append(neighbor)
+            
+            ideal_g_score = node.g_score + 1
+            if neighbor.g_score > ideal_g_score:
+                neighbor.g_score = ideal_g_score
+                if not neighbor in open:
+                    open.append(neighbor)
     
     def get_best_node(self, node_list):
         hashmap = []
         best_node = node_list[0]
         
         for node in node_list:
-            node_total_distance = node.get_total_distance(self.start, self.target)
+            node_total_distance = node.get_f_score(self.target)
             hashmap.append(node_total_distance)
             if min(hashmap) == node_total_distance:
                 best_node = node
