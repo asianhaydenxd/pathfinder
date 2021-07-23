@@ -1,6 +1,4 @@
-from path import Path
-from node import Node, NodeState
-from map import Map
+from map import Map, NodeType
 from matplotlib import pyplot as plt
 from matplotlib import colors
 

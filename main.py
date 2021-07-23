@@ -1,5 +1,5 @@
 from map import Map
-from node import Node, NodeState
+from node import Node
 from plotmap import PlotMap
 
 small_map = Map([

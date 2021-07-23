@@ -1,3 +1,4 @@
+from map import NodeType
 
 class Node:
     def __init__(self, row, col, parent):
