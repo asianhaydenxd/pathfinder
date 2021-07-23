@@ -66,7 +66,7 @@ class Node:
         return self.row + 1 > map.height or self.col + 1 > map.width
     
     def is_wall(self, map):
-        return map.matrix[self.row][self.col] == NodeState.WALL
+        return map.matrix[self.row][self.col] == NodeState.WALL.value
     
     def is_in_list(self, list):
         for node in list:
