@@ -1,56 +1,52 @@
-from path import Path
-from node import Node, NodeState
-from map import Map
+from map import Map, NodeType
+from copy import deepcopy
 from matplotlib import pyplot as plt
-from matplotlib import colors
 
-DEFAULT_BASE_COLORMAP = {
-    NodeState.BLANK: '#fff',
-    NodeState.WALL: '#033',
-    NodeState.START: '#193',
-    NodeState.TARGET: '#c32'
+DEFAULT_COLORMAP = {
+    NodeType.BLANK.value: (255, 255, 255), # White
+    NodeType.WALL.value: (0, 0, 0), # Black
+    NodeType.START.value: (22, 219, 75), # Green
+    NodeType.TARGET.value: (232, 55, 35), # Red
+    NodeType.PATH.value: (255, 205, 54), # Yellow
+    NodeType.CLOSED.value: (58, 145, 214), # Blue
+    NodeType.OPEN.value: (39, 117, 179), # Darker Blue
 }
-
-DEFAULT_FULL_COLORMAP = {
-    NodeState.PATH: '#db1',
-    NodeState.CLOSED: '#27b',
-    NodeState.OPEN: '#1bd'
-}
-DEFAULT_FULL_COLORMAP.update(DEFAULT_BASE_COLORMAP)
 
 class Color:
     def __init__(self, colormap):
-        colormap = self.fill_missing_keys(colormap)
-        self.colors = self.get_colors(colormap)
-        self.base_colors = self.get_base_colors(colormap)
+        self.colors = self.fill_missing_keys(colormap)
     
     def fill_missing_keys(self, colormap):
-        for state in NodeState:
-            if not state in colormap:
-                colormap[state] = DEFAULT_FULL_COLORMAP[state]
+        for type in NodeType:
+            if not type.value in colormap:
+                colormap[type] = DEFAULT_COLORMAP[type]
         return colormap
 
-    def get_colors(self, colormap):
-        color_list = [colormap[state] for state in NodeState]
-        largest_colormap_int = max(NodeState, key=lambda k: k.value).value
-        if len(color_list) - 1 < largest_colormap_int:
-            raise ValueError('Invalid NodeState static variables (must be consecutive integers from 0)')
-        return color_list
-    
-    def get_base_colors(self, colormap):
-        return [colormap[state] for state in (nodestate for nodestate in DEFAULT_BASE_COLORMAP)]
-
 class PlotMap:
-    def __init__(self, map: Map, colormap=DEFAULT_FULL_COLORMAP):
+    def __init__(self, map: Map, colormap=DEFAULT_COLORMAP):
         self.map = map
         self.color = Color(colormap)
     
     def plot(self, plain=False):
         if plain:
-            self.show_plot_window(self.map.matrix, base_only=True)
+            self.show_plot_window(self.map.matrix)
             return
         path_matrix = self.append_path()
-        self.show_plot_window(path_matrix, base_only=False)
+        self.show_plot_window(path_matrix)
+    
+    def show_plot_window(self, matrix):
+        plt.xlabel('Col')
+        plt.ylabel('Row')
+        color_matrix = self.get_color_matrix(matrix, self.color.colors)
+        plt.imshow(color_matrix)
+        plt.show()
+    
+    def get_color_matrix(self, matrix, colormap):
+        color_matrix = deepcopy(matrix)
+        for row_i, row in enumerate(matrix):
+            for col_i, node in enumerate(row):
+                color_matrix[row_i][col_i] = colormap[node]
+        return color_matrix
     
     def append_path(self):
         matrix = self.map.matrix
@@ -60,29 +56,20 @@ class PlotMap:
         return matrix
     
     def append_open_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().open, NodeState.OPEN.value)
+        self.replace_matrix(matrix, self.map.get_path().open, NodeType.OPEN.value)
     
     def append_closed_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path().closed, NodeState.CLOSED.value)
+        self.replace_matrix(matrix, self.map.get_path().closed, NodeType.CLOSED.value)
     
     def append_path_nodes(self, matrix):
-        self.replace_matrix(matrix, self.map.get_path_list(), NodeState.PATH.value)
+        self.replace_matrix(matrix, self.map.get_path_list(), NodeType.PATH.value)
     
-    def replace_matrix(self, matrix, list, val):
+    def replace_matrix(self, matrix, list, type):
         for node in list:
             if self.is_at_end(node):
                 continue
             row, col = node.get_coords()
-            matrix[row][col] = val
+            matrix[row][col] = type
     
     def is_at_end(self, node):
         return node == self.map.start or node == self.map.target
-    
-    def show_plot_window(self, matrix, base_only=False):
-        plt.xlabel('Col')
-        plt.ylabel('Row')
-        plt.imshow(matrix, cmap=PlotMap.get_colors(self.color.base_colors if base_only else self.color.colors))
-        plt.show()
-    
-    def get_colors(colormap):
-        return colors.ListedColormap(colormap)
