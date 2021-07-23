@@ -19,9 +19,9 @@ class Color:
         self.base_colors = self.get_base_colors(colormap)
     
     def fill_missing_keys(self, colormap):
-        for state in NodeState:
-            if not state in colormap:
-                colormap[state] = DEFAULT_FULL_COLORMAP[state]
+        for type in NodeType:
+            if not type in colormap:
+                colormap[type] = DEFAULT_COLORMAP[type]
         return colormap
 
     def get_colors(self, colormap):
