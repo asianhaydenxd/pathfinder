@@ -25,14 +25,8 @@ class Node:
     def get_coords(self):
         return (self.row, self.col)
     
-    def get_total_distance(self, start, target):
-        return self.get_distance_from_start(start) + self.get_distance_from_target(target)
-    
     def get_f_score(self, target):
         return self.g_score + self.get_distance_from_target(target)
-    
-    def get_distance_from_start(self, start):
-        return self.get_horizontal_distance(start) + self.get_vertical_distance(start)
     
     def get_distance_from_target(self, target):
         return (self.get_horizontal_distance(target) + self.get_vertical_distance(target))*1
