@@ -84,16 +84,19 @@ class Map:
                 best_node = node
         return best_node
     
-    def new(rows=5, cols=5, start=(0,0), target=(4,4)):
-        new_map = [[NodeType.BLANK.value for _ in range(cols)] for _ in range(rows)]
+    def new(rows=5, cols=5, start=(0,0), target=(4,4), walls=[]):
+        new_matrix = [[NodeType.BLANK.value for _ in range(cols)] for _ in range(rows)]
 
         start_row, start_col = start
         target_row, target_col = target
 
-        new_map[start_row][start_col] = NodeType.START.value
-        new_map[target_row][target_col] = NodeType.TARGET.value
+        new_matrix[start_row][start_col] = NodeType.START.value
+        new_matrix[target_row][target_col] = NodeType.TARGET.value
 
-        return Map(new_map)
+        new_map = Map(new_matrix)
+        new_map.append_walls(walls)
+
+        return new_map
     
     def append_walls(self, coords: list):
         if self.start.get_coords() in coords:
