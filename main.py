@@ -2,7 +2,7 @@ import pathfinder as pf
 from plotmap import PlotMap
 from imagemap import ImageMap
 
-pf.TURN_WEIGHT = 2
+pf.TURN_WEIGHT = 1
 
 # Maps
 

@@ -1,7 +1,7 @@
 from copy import deepcopy
 from enum import Enum, auto
 
-TURN_WEIGHT = 2
+TURN_WEIGHT = 1
 
 class NodeTypeInitiator:
     def __init__(self, type, is_from_init=True):
