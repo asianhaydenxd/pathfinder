@@ -2,8 +2,8 @@ import pathfinder as pf
 from plotmap import PlotMap
 from imagemap import ImageMap
 
-pf.TURN_WEIGHT = 0
-pf.HEURISTIC_WEIGHT = 0
+pf.TURN_WEIGHT = 1
+pf.HEURISTIC_WEIGHT = 1
 
 # Maps
 
@@ -39,11 +39,11 @@ custom_map.append_walls([(4, 4), (3, 3)])
 custom_map.relocate_start((0, 1))
 custom_map.relocate_target((6, 12))
 
-image_map = pf.Map(ImageMap('map.png').generate_map())
+image_map = pf.Map(ImageMap('maze.png').generate_map())
 
 # Pathfinding
 
-pltmap = PlotMap(image_map)
+pltmap = PlotMap(large_map)
 pltmap.plot(plain=True)
 pltmap.plot()
 
