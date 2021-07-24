@@ -1,5 +1,4 @@
 from PIL import Image
-from copy import deepcopy
 from pathfinder import NodeType
 import numpy
 import webcolors
