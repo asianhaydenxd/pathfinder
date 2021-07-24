@@ -18,14 +18,14 @@ class ImageMap:
         return new_matrix
     
     def get_node_type(self, node):
-        if self.closest_color(node) == 'white':
-            return NodeType.BLANK.value
-        if self.closest_color(node) == 'black':
-            return NodeType.WALL.value
-        if self.closest_color(node) == 'lime':
-            return NodeType.START.value
-        if self.closest_color(node) == 'red':
-            return NodeType.TARGET.value
+        colormap = {
+            'white': NodeType.BLANK.value,
+            'black': NodeType.WALL.value,
+            'lime': NodeType.START.value,
+            'red': NodeType.TARGET.value,
+        }
+        closest_color = self.closest_color(node)
+        return colormap[closest_color]
     
     def closest_color(self, requested_color):
         requested_color = tuple(requested_color)
