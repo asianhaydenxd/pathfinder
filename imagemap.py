@@ -11,11 +11,10 @@ class ImageMap:
     
     def generate_map(self):
         new_matrix = []
-        for row_i, row in enumerate(self.matrix):
+        for row in self.matrix:
             new_matrix.append([])
-            for col_i, node in enumerate(row):
-                new_matrix[row_i].append(self.get_node_type(node))
-                
+            for node in row:
+                new_matrix[-1].append(self.get_node_type(node))
         return new_matrix
     
     def get_node_type(self, node):
