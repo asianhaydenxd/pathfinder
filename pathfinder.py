@@ -1,6 +1,5 @@
 from copy import deepcopy
 from enum import Enum, unique
-import node as Node
 
 class NodeTypeInitiator:
     def __init__(self, type, is_from_init=True):
@@ -20,6 +19,64 @@ class NodeType(Enum):
     OPEN = NodeTypeInitiator('OPEN', is_from_init=False)
     CLOSED = NodeTypeInitiator('CLOSED', is_from_init=False)
 
+class Node:
+    def __init__(self, row, col, parent):
+        self.row = row
+        self.col = col
+        self.parent = parent
+        self.g_score = float('inf')
+    
+    def __str__(self):
+        return str(self.__dict__)
+
+    def __eq__(self, other):
+        return self.row == other.row and self.col == other.col
+    
+    def get_coords(self):
+        return (self.row, self.col)
+    
+    def get_f_score(self, target):
+        return self.g_score + self.get_distance_from_target(target)
+    
+    def get_distance_from_target(self, target):
+        return (self.get_horizontal_distance(target) + self.get_vertical_distance(target))*1
+    
+    def get_horizontal_distance(self, node):
+        return abs(self.row - node.row)
+    
+    def get_vertical_distance(self, node):
+        return abs(self.col - node.col)
+    
+    def get_neighbors(self):
+        neighbor_north = Node(self.row - 1, self.col, self)
+        neighbor_south = Node(self.row + 1, self.col, self)
+
+        neighbor_west = Node(self.row, self.col - 1, self)
+        neighbor_east = Node(self.row, self.col + 1, self)
+
+        neighbors = [neighbor_north, neighbor_east, neighbor_south, neighbor_west]
+        
+        return neighbors
+    
+    def is_blocked(self, map):
+        if self.is_out_of_bounds(map):
+            return True
+        if self.is_wall(map):
+            return True
+        return False
+    
+    def is_out_of_bounds(self, map):
+        return self.is_outside_lower_bound() or self.is_outside_upper_bound(map)
+    
+    def is_outside_lower_bound(self):
+        return self.row < 0 or self.col < 0
+    
+    def is_outside_upper_bound(self, map):
+        return self.row + 1 > map.height or self.col + 1 > map.width
+    
+    def is_wall(self, map):
+        return map.matrix[self.row][self.col] == NodeType.WALL.value
+
 class Map:
     def __init__(self, matrix):
         self.matrix = matrix
@@ -34,7 +91,7 @@ class Map:
     def get_node_of_type(self, type):
         for index, row in enumerate(self.matrix):
             if type in row:
-                return Node.Node(index, row.index(type), None)
+                return Node(index, row.index(type), None)
         raise ValueError(f'Value {type} does not exist in map.')
     
     def get_path(self):
@@ -114,10 +171,10 @@ class Map:
     def relocate_target(self, new_coords: tuple):
         self.target = self.relocate_node(self.target, NodeType.TARGET.value, new_coords)
     
-    def relocate_node(self, node, type, new_coords) -> Node.Node:
+    def relocate_node(self, node, type, new_coords) -> Node:
         prev_row, prev_col = node.get_coords()
         new_row, new_col = new_coords
-        new_node = Node.Node(new_row, new_col, None)
+        new_node = Node(new_row, new_col, None)
 
         if new_node.is_out_of_bounds(self):
             raise ValueError(f'The provided coordinates for the new {type} node are out of bounds.')
@@ -174,3 +231,6 @@ class MapCompiler:
 class CompiledMap(Map):
     def __init__(self, matrix, blank=0, wall=1, start=2, target=3):
         super().__init__(MapCompiler(matrix, blank, wall, start, target).compile())
+
+def list_coords(node_list):
+        return [node.get_coords() for node in node_list]

@@ -1,4 +1,4 @@
-from map import Map, NodeType
+from pathfinder import NodeType, Map
 from copy import deepcopy
 from matplotlib import pyplot as plt
 
