@@ -1,5 +1,7 @@
 from copy import deepcopy
-from enum import Enum, unique
+from enum import Enum, auto
+
+TURN_WEIGHT = 2
 
 class NodeTypeInitiator:
     def __init__(self, type, is_from_init=True):
@@ -9,7 +11,6 @@ class NodeTypeInitiator:
     def __str__(self):
         return f'NodeType.{self.type}.value'
 
-@unique
 class NodeType(Enum):
     BLANK = NodeTypeInitiator('BLANK')
     WALL = NodeTypeInitiator('WALL')
@@ -19,11 +20,18 @@ class NodeType(Enum):
     OPEN = NodeTypeInitiator('OPEN', is_from_init=False)
     CLOSED = NodeTypeInitiator('CLOSED', is_from_init=False)
 
+class Direction(Enum):
+    NORTH = auto()
+    EAST = auto()
+    SOUTH = auto()
+    WEST = auto()
+
 class Node:
-    def __init__(self, row, col, parent):
+    def __init__(self, row, col, parent, direction=None):
         self.row = row
         self.col = col
         self.parent = parent
+        self.direction = direction
         self.g_score = float('inf')
     
     def __str__(self):
@@ -48,11 +56,11 @@ class Node:
         return abs(self.col - node.col)
     
     def get_neighbors(self):
-        neighbor_north = Node(self.row - 1, self.col, self)
-        neighbor_south = Node(self.row + 1, self.col, self)
+        neighbor_north = Node(self.row - 1, self.col, self, Direction.NORTH)
+        neighbor_south = Node(self.row + 1, self.col, self, Direction.SOUTH)
 
-        neighbor_west = Node(self.row, self.col - 1, self)
-        neighbor_east = Node(self.row, self.col + 1, self)
+        neighbor_west = Node(self.row, self.col - 1, self, Direction.WEST)
+        neighbor_east = Node(self.row, self.col + 1, self, Direction.EAST)
 
         neighbors = [neighbor_north, neighbor_east, neighbor_south, neighbor_west]
         
@@ -122,7 +130,11 @@ class Map:
             
             ideal_g_score = node.g_score + 1
             if neighbor.g_score > ideal_g_score:
-                neighbor.g_score = ideal_g_score
+                if neighbor.direction == node.direction:
+                    neighbor.g_score = ideal_g_score
+                else:
+                    neighbor.g_score = ideal_g_score * TURN_WEIGHT
+
                 if not neighbor in open:
                     open.append(neighbor)
     
