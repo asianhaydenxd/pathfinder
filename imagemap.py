@@ -14,15 +14,19 @@ class ImageMap:
         for row_i, row in enumerate(self.matrix):
             new_matrix.append([])
             for col_i, node in enumerate(row):
-                if self.closest_color(node) == 'white':
-                    new_matrix[row_i].append(NodeType.BLANK.value)
-                if self.closest_color(node) == 'black':
-                    new_matrix[row_i].append(NodeType.WALL.value)
-                if self.closest_color(node) == 'lime':
-                    new_matrix[row_i].append(NodeType.START.value)
-                if self.closest_color(node) == 'red':
-                    new_matrix[row_i].append(NodeType.TARGET.value)
+                new_matrix[row_i].append(self.get_node_type(node))
+                
         return new_matrix
+    
+    def get_node_type(self, node):
+        if self.closest_color(node) == 'white':
+            return NodeType.BLANK.value
+        if self.closest_color(node) == 'black':
+            return NodeType.WALL.value
+        if self.closest_color(node) == 'lime':
+            return NodeType.START.value
+        if self.closest_color(node) == 'red':
+            return NodeType.TARGET.value
     
     def closest_color(self, requested_color):
         requested_color = tuple(requested_color)
