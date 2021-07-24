@@ -1,5 +1,10 @@
 import pathfinder as pf
 from plotmap import PlotMap
+from imagemap import ImageMap
+
+pf.TURN_WEIGHT = 2
+
+# Maps
 
 small_map = pf.CompiledMap([
     [0, 0, 0, 0, 0],
@@ -33,12 +38,15 @@ custom_map.append_walls([(4, 4), (3, 3)])
 custom_map.relocate_start((0, 1))
 custom_map.relocate_target((6, 12))
 
+image_map = pf.Map(ImageMap('map.png').generate_map())
 
-pltmap = PlotMap(large_map)
+# Pathfinding
+
+pltmap = PlotMap(image_map)
 pltmap.plot(plain=True)
 pltmap.plot()
 
-path = large_map.get_path()
+path = image_map.get_path()
 
 path.node # Last node in path
 path.checks # Number of times the algorithm checked a node
