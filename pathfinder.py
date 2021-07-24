@@ -1,7 +1,8 @@
 from copy import deepcopy
 from enum import Enum, auto
 
-TURN_WEIGHT = 1
+TURN_WEIGHT = 0
+HEURISTIC_WEIGHT = 0
 
 class NodeTypeInitiator:
     def __init__(self, type, is_from_init=True):
@@ -47,7 +48,7 @@ class Node:
         return self.g_score + self.get_distance_from_target(target)
     
     def get_distance_from_target(self, target):
-        return (self.get_horizontal_distance(target) + self.get_vertical_distance(target))*1
+        return (self.get_horizontal_distance(target) + self.get_vertical_distance(target)) * (1 + HEURISTIC_WEIGHT)
     
     def get_horizontal_distance(self, node):
         return abs(self.row - node.row)
@@ -133,7 +134,7 @@ class Map:
                 if neighbor.direction == node.direction:
                     neighbor.g_score = ideal_g_score
                 else:
-                    neighbor.g_score = ideal_g_score * TURN_WEIGHT
+                    neighbor.g_score = ideal_g_score * (1 + TURN_WEIGHT)
 
                 if not neighbor in open:
                     open.append(neighbor)
