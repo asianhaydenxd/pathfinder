@@ -20,4 +20,7 @@ class ImageMap:
     
     def get_node_type(self, node):
         node = tuple(node)
-        return self.colormap[node]
+        try:
+            return self.colormap[node]
+        except KeyError as color:
+            raise ValueError(f'Found unassigned color {color} in ImageMap map')
