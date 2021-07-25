@@ -49,7 +49,7 @@ class Node:
         return self.g_score + self.get_distance_from_target(target)
     
     def get_distance_from_target(self, target):
-        return (self.get_horizontal_distance(target) + self.get_vertical_distance(target)) * HEURISTIC_WEIGHT * (TURN_WEIGHT if self.on_turn else 1)
+        return (self.get_horizontal_distance(target) + self.get_vertical_distance(target)) * HEURISTIC_WEIGHT
     
     def get_horizontal_distance(self, node):
         return abs(self.row - node.row)
@@ -132,13 +132,15 @@ class Map:
             
             ideal_g_score = node.g_score + 1
             if neighbor.g_score > ideal_g_score:
-                neighbor.g_score = ideal_g_score
-                
-                if neighbor.direction == node.direction:
-                    neighbor.on_turn = True
-
+                neighbor.g_score = self.get_new_g_score(neighbor, node)
                 if not neighbor in open:
                     open.append(neighbor)
+    
+    def get_new_g_score(self, neighbor, node):
+        ideal_g_score = node.g_score + 1
+        if neighbor.direction == node.direction:
+            return ideal_g_score
+        return ideal_g_score * TURN_WEIGHT
     
     def get_best_node(self, node_list):
         hashmap = []
