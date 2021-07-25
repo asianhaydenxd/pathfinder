@@ -1,6 +1,6 @@
 from pathfinder import NodeType, Map
-from copy import deepcopy
 from matplotlib import pyplot as plt
+from copy import deepcopy
 
 DEFAULT_COLORMAP = {
     NodeType.BLANK.value: (255, 255, 255), # White

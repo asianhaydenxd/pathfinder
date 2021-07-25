@@ -1,9 +1,9 @@
 from PIL import Image
-from pathfinder import NodeType
+from pathfinder import Map, NodeType
 import numpy
 import webcolors
 
-class ImageMap:
+class ImageMatrix:
     def __init__(self, image_name):
         self.image_name = image_name
         self.image = Image.open(image_name).convert('RGB')
@@ -24,3 +24,7 @@ class ImageMap:
             return self.colormap[node]
         except KeyError as color:
             raise ValueError(f'Found unassigned color {color} in ImageMap map')
+
+class ImageMap(Map):
+    def __init__(self, matrix):
+        super().__init__(ImageMatrix(matrix).generate_map())

@@ -1,6 +1,6 @@
-import pathfinder as pf
 from plotmap import PlotMap
-from imagemap import ImageMap
+import pathfinder as pf
+import imagemap as im
 
 pf.TURN_WEIGHT = 1
 pf.HEURISTIC_WEIGHT = 1
@@ -39,15 +39,15 @@ custom_map.append_walls([(4, 4), (3, 3)])
 custom_map.relocate_start((0, 1))
 custom_map.relocate_target((6, 12))
 
-image_map = pf.Map(ImageMap('maze.png').generate_map())
+image_map = im.ImageMap('maze.png')
 
 # Pathfinding
 
-pltmap = PlotMap(large_map)
+pltmap = PlotMap(custom_map)
 pltmap.plot(plain=True)
 pltmap.plot()
 
-path = image_map.get_path()
+path = custom_map.get_path()
 
 path.node # Last node in path
 path.checks # Number of times the algorithm checked a node
