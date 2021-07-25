@@ -10,12 +10,7 @@ class ImageMap:
         self.matrix = numpy.array(self.image)
     
     def generate_map(self):
-        new_matrix = []
-        for row in self.matrix:
-            new_matrix.append([])
-            for node in row:
-                new_matrix[-1].append(self.get_node_type(node))
-        return new_matrix
+        return [[self.get_node_type(node) for node in row] for row in self.matrix]
     
     def get_node_type(self, node):
         colormap = {
@@ -24,8 +19,7 @@ class ImageMap:
             'lime': NodeType.START.value,
             'red': NodeType.TARGET.value,
         }
-        closest_color = self.closest_color(node)
-        return colormap[closest_color]
+        return colormap[self.closest_color(node)]
     
     def closest_color(self, requested_color):
         requested_color = tuple(requested_color)
